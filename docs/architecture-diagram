@@ -1,0 +1,36 @@
+graph TD
+
+%% ==== FRONTEND LAYER ====
+subgraph Frontend [Frontend Layer]
+    A1[React Web App] -->|REST| B1[API Gateway]
+end
+
+%% ==== BACKEND LAYER ====
+subgraph Backend [Backend Layer]
+    B1 --> S1[Auth Service]
+    B1 --> S2[Menu Planning Service]
+    B1 --> S3[Recipe Service]
+    B1 --> S4[Comment Service]
+    B1 --> S5[Notification Service]
+end
+
+%% ==== DATABASE LAYER ====
+subgraph Database [Database Layer]
+    DB1[(PostgreSQL)]
+end
+
+%% ==== INFRASTRUCTURE LAYER ====
+subgraph Infrastructure [Infrastructure Layer]
+    MQ[(Message Queue - Redis)]
+end
+
+%% ==== CONNECTIONS ====
+S1 --> DB1
+S2 --> DB1
+S3 --> DB1
+S4 --> DB1
+S5 --> DB1
+
+S3 --> MQ
+S5 --> MQ
+A1 -->|HTTPs| B1
